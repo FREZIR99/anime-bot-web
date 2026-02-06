@@ -2,187 +2,60 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Anime Waifu Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnimeBot Select</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* --- СТИЛИ (Дизайн) --- */
-        body {
-            background-color: #121214; /* Темный фон */
-            color: #ffffff;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 16px;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        h2, h3 { margin-top: 0; }
-        
-        /* Навигация (Табы) */
-        .nav {
-            display: flex;
-            background: #232325;
-            padding: 4px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-        .nav-btn {
-            flex: 1;
-            border: none;
-            background: none;
-            color: #8e8e93;
-            padding: 10px;
-            font-weight: 600;
-            font-size: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .nav-btn.active {
-            background: #3a3a3c;
-            color: #ff4785; /* Розовый акцент */
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        /* Сетка товаров/персонажей */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 колонки */
-            gap: 12px;
-        }
-
-        /* Карточка */
-        .card {
-            background: #232325;
-            border-radius: 16px;
-            padding: 12px;
-            text-align: center;
-            border: 1px solid #2c2c2e;
-            transition: transform 0.1s;
-        }
-        .card:active { transform: scale(0.98); }
-
-        .avatar {
-            width: 100%;
-            aspect-ratio: 1; /* Квадрат */
-            border-radius: 12px;
-            background-color: #333;
-            object-fit: cover;
-            margin-bottom: 10px;
-        }
-        
-        .card-title { font-weight: bold; font-size: 14px; margin-bottom: 4px; }
-        .card-desc { color: #8e8e93; font-size: 11px; }
-
-        /* Кнопки действий */
-        .action-btn {
-            background: linear-gradient(90deg, #ff4785, #d946ef);
-            border: none;
-            color: white;
-            padding: 8px 0;
-            width: 100%;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-top: 8px;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        
-        .price-tag {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            margin-bottom: 8px;
-            display: inline-block;
-        }
+        body { font-family: sans-serif; background: #1a1a1a; color: white; text-align: center; margin: 0; padding: 20px; }
+        .container { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+        .card { background: #2a2a2a; border-radius: 15px; padding: 15px; width: 90%; border: 2px solid #444; transition: 0.3s; }
+        .card:active { border-color: #ff4081; transform: scale(0.98); }
+        .card img { width: 100%; border-radius: 10px; }
+        h2 { margin: 10px 0; color: #ff4081; }
+        p { font-size: 14px; color: #ccc; }
+        .btn { background: #ff4081; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; width: 100%; }
+        select { background: #333; color: white; border: 1px solid #555; padding: 5px; width: 100%; border-radius: 5px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
+    <h1>Выбери свою вайфу</h1>
+    <div class="container">
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200?text=Asuka+Photo" alt="Asuka">
+            <h2>Аска Лэнгли</h2>
+            <select id="scenario1">
+                <option value="Школа (ученик и староста)">Школа</option>
+                <option value="Дом (уборка в твоей комнате)">Дом</option>
+                <option value="Пляж (отдых после миссии)">Пляж</option>
+            </select>
+            <button class="btn" onclick="selectChar(1, 'Asuka', 'scenario1')">ВЫБРАТЬ</button>
+        </div>
 
-    <div class="nav">
-        <button class="nav-btn active" onclick="openTab('gallery')">Девушки</button>
-        <button class="nav-btn" onclick="openTab('shop')">Магазин</button>
-    </div>
-
-    <div id="gallery" class="content-tab">
-        <div class="grid">
-            <div class="card">
-                <img src="https://via.placeholder.com/300/ff4785/ffffff?text=Asuka" class="avatar">
-                <div class="card-title">Аска</div>
-                <div class="card-desc">Дерзкая, Цундере</div>
-                <button class="action-btn" onclick="selectChar(1, 'Свидание')">Выбрать</button>
-            </div>
-
-            <div class="card">
-                <img src="https://via.placeholder.com/300/8c52ff/ffffff?text=2B" class="avatar">
-                <div class="card-title">2B Android</div>
-                <div class="card-desc">Холодная, Послушная</div>
-                <button class="action-btn" onclick="selectChar(2, 'Миссия')">Выбрать</button>
-            </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200?text=2B+Photo" alt="2B">
+            <h2>2B (NieR)</h2>
+            <select id="scenario2">
+                <option value="Бункер (техобслуживание)">Бункер</option>
+                <option value="Руины города (патруль)">Руины</option>
+                <option value="Тайное место (NSFW)">Тайное место</option>
+            </select>
+            <button class="btn" onclick="selectChar(2, '2B', 'scenario2')">ВЫБРАТЬ</button>
         </div>
     </div>
 
-    <div id="shop" class="content-tab" style="display: none;">
-        <div class="grid">
-            <div class="card">
-                <div style="font-size: 40px; margin: 10px 0;">💎</div>
-                <div class="card-title">50 Кредитов</div>
-                <div class="price-tag">50 ⭐ Stars</div>
-                <button class="action-btn" onclick="buyItem('pack_50', 50)">Купить</button>
-            </div>
-
-            <div class="card">
-                <div style="font-size: 40px; margin: 10px 0;">👑</div>
-                <div class="card-title">Premium Day</div>
-                <div class="price-tag">150 ⭐ Stars</div>
-                <button class="action-btn" onclick="buyItem('premium_day', 150)">Купить</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        // Инициализация Telegram WebApp
         let tg = window.Telegram.WebApp;
-        tg.expand(); // Раскрыть на весь экран
-        
-        // Настраиваем цвета под тему пользователя (темная/светлая)
-        document.body.style.backgroundColor = tg.themeParams.bg_color || '#121214';
-        document.body.style.color = tg.themeParams.text_color || '#ffffff';
+        tg.expand(); // Разворачиваем на весь экран
 
-        // Функция переключения вкладок
-        function openTab(tabName) {
-            // Скрываем все
-            document.getElementById('gallery').style.display = 'none';
-            document.getElementById('shop').style.display = 'none';
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-
-            // Показываем нужное
-            document.getElementById(tabName).style.display = 'block';
-            
-            // Подсветка кнопки (кривовато, но для MVP пойдет)
-            const btnIndex = tabName === 'gallery' ? 0 : 1;
-            document.querySelectorAll('.nav-btn')[btnIndex].classList.add('active');
-        }
-
-        // Функция выбора персонажа
-        function selectChar(id, scenario) {
-            tg.sendData(JSON.stringify({
-                action: "start_chat",
+        function selectChar(id, name, scenarioId) {
+            let scen = document.getElementById(scenarioId).value;
+            let data = {
+                action: 'start_chat',
                 character_id: id,
-                scenario: scenario
-            }));
-            tg.close();
-        }
-
-        // Функция покупки
-        function buyItem(itemId, price) {
-            tg.sendData(JSON.stringify({
-                action: "buy_item",
-                item_id: itemId,
-                price: price
-            }));
-            tg.close();
+                scenario: scen
+            };
+            tg.sendData(JSON.stringify(data)); // Отправляем данные боту
+            tg.close(); // Закрываем окно
         }
     </script>
 </body>
